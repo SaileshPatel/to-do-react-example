@@ -1,5 +1,17 @@
 'use strict';
 
+class Item extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <li>{this.props.ItemName}</li>
+        )
+    }
+}
+
 class List extends React.Component {
     constructor(props) {
         super(props);
@@ -9,7 +21,7 @@ class List extends React.Component {
     render() {
         return (
             <ul>
-                <li>Example Item</li>
+                <Item ItemName="Example Item 1" />
             </ul>
         )
     }
