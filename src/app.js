@@ -27,6 +27,22 @@ class List extends React.Component {
     }
 }
 
+class ItemForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    render() {
+        return (
+            <form>
+                <input type="text" name="to-do-task" />
+                <input type="submit" value="submit" />
+            </form>
+        );
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +51,10 @@ class App extends React.Component {
 
     render() {
         return (
-            <List />
+            <div>
+                <ItemForm />
+                <List />
+            </div>
         );
     }
 }
