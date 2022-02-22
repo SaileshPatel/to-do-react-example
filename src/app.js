@@ -21,7 +21,11 @@ class List extends React.Component {
     render() {
         return (
             <ul>
-                <Item ItemName="Example Item 1" />
+                {this.props.taskItems.map((item) =>
+                    <Item
+                        key={item.toString()}
+                        ItemName={item} />
+                )}
             </ul>
         )
     }
@@ -46,14 +50,16 @@ class ItemForm extends React.Component {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            tasks: ["Hello", "Task 1"],
+        };
     }
 
     render() {
         return (
             <div>
                 <ItemForm />
-                <List />
+                <List taskItems={this.state.tasks} />
             </div>
         );
     }
