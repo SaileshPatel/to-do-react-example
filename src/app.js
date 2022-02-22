@@ -34,15 +34,33 @@ class List extends React.Component {
 class ItemForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            taskName: ""
+        };
+        this.updateTaskName = this.updateTaskName.bind(this);
+        this.addItemToList = this.addItemToList.bind(this);
+    }
+
+    updateTaskName(e) {
+        this.setState({
+            taskName: e.target.value
+        })
+    }
+
+    addItemToList() {
+        var value = this.state.taskName;
+        this.props.addItem(value);
     }
 
     render() {
         return (
-            <form>
-                <input type="text" name="to-do-task" />
-                <input type="submit" value="submit" />
-            </form>
+            <div>
+                <input type="text"
+                    name="to-do-task"
+                    value={this.state.taskName}
+                    onChange={this.updateTaskName} />
+                <input type="submit" value="submit" onClick={this.addItemToList} />
+            </div>
         );
     }
 }
@@ -51,14 +69,21 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: ["Hello", "Task 1"],
+            tasks: [],
         };
+        this.addTaskToList = this.addTaskToList.bind(this);
+    }
+
+    addTaskToList(task) {
+        this.setState({
+            tasks: [...this.state.tasks, task]
+        })
     }
 
     render() {
         return (
             <div>
-                <ItemForm />
+                <ItemForm addItem={this.addTaskToList} />
                 <List taskItems={this.state.tasks} />
             </div>
         );
