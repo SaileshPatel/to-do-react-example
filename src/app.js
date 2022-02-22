@@ -21,21 +21,78 @@ class List extends React.Component {
     render() {
         return (
             <ul>
-                <Item ItemName="Example Item 1" />
+                {this.props.taskItems.map((item, index) =>
+                    <Item
+                        key={index}
+                        ItemName={item} />
+                )}
             </ul>
         )
+    }
+}
+
+class ItemForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskName: ""
+        };
+        this.updateTaskName = this.updateTaskName.bind(this);
+        this.addItemToList = this.addItemToList.bind(this);
+    }
+
+    updateTaskName(e) {
+        e.preventDefault();
+        this.setState({
+            taskName: e.target.value
+        })
+    }
+
+    addItemToList() {
+        if (!this.state.taskName) {
+            return;
+        }
+        var value = this.state.taskName;
+        this.props.addItem(value);
+        this.setState({
+            taskName: ''
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                <input type="text"
+                    name="to-do-task"
+                    value={this.state.taskName}
+                    onChange={this.updateTaskName} />
+                <input type="submit" value="submit" onClick={this.addItemToList} />
+            </div>
+        );
     }
 }
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            tasks: [],
+        };
+        this.addTaskToList = this.addTaskToList.bind(this);
+    }
+
+    addTaskToList(task) {
+        this.setState({
+            tasks: [...this.state.tasks, task]
+        })
     }
 
     render() {
         return (
-            <List />
+            <div>
+                <ItemForm addItem={this.addTaskToList} />
+                <List taskItems={this.state.tasks} />
+            </div>
         );
     }
 }
