@@ -21,9 +21,9 @@ class List extends React.Component {
     render() {
         return (
             <ul>
-                {this.props.taskItems.map((item) =>
+                {this.props.taskItems.map((item, index) =>
                     <Item
-                        key={item.toString()}
+                        key={index}
                         ItemName={item} />
                 )}
             </ul>
