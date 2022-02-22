@@ -42,6 +42,7 @@ class ItemForm extends React.Component {
     }
 
     updateTaskName(e) {
+        e.preventDefault();
         this.setState({
             taskName: e.target.value
         })
@@ -53,6 +54,9 @@ class ItemForm extends React.Component {
         }
         var value = this.state.taskName;
         this.props.addItem(value);
+        this.setState({
+            taskName: ''
+        })
     }
 
     render() {
