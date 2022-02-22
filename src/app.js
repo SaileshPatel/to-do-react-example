@@ -48,6 +48,9 @@ class ItemForm extends React.Component {
     }
 
     addItemToList() {
+        if (!this.state.taskName) {
+            return;
+        }
         var value = this.state.taskName;
         this.props.addItem(value);
     }
