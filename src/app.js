@@ -3,11 +3,18 @@
 class Item extends React.Component {
     constructor(props) {
         super(props);
+        this.removeItemFromList = this.removeItemFromList.bind(this);
+    }
+
+    removeItemFromList() {
+        this.props.removeItem(this.props.ItemName);
     }
 
     render() {
         return (
-            <li>{this.props.ItemName}</li>
+            <li>{this.props.ItemName}
+                <input type="submit" value="Delete" onClick={this.removeItemFromList} />
+            </li>
         )
     }
 }
@@ -24,7 +31,8 @@ class List extends React.Component {
                 {this.props.taskItems.map((item, index) =>
                     <Item
                         key={index}
-                        ItemName={item} />
+                        ItemName={item}
+                        removeItem={this.props.deleteItem} />
                 )}
             </ul>
         )
@@ -79,6 +87,7 @@ class App extends React.Component {
             tasks: [],
         };
         this.addTaskToList = this.addTaskToList.bind(this);
+        this.deleteTaskFromList = this.deleteTaskFromList.bind(this);
     }
 
     addTaskToList(task) {
@@ -87,11 +96,17 @@ class App extends React.Component {
         })
     }
 
+    deleteTaskFromList(task) {
+        this.setState({
+            tasks: this.state.tasks.filter(t => t !== task)
+        });
+    }
+
     render() {
         return (
             <div>
                 <ItemForm addItem={this.addTaskToList} />
-                <List taskItems={this.state.tasks} />
+                <List taskItems={this.state.tasks} deleteItem={this.deleteTaskFromList} />
             </div>
         );
     }
